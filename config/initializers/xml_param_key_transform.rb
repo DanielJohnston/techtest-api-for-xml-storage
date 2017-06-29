@@ -8,5 +8,5 @@ ActionDispatch::Request.parameter_parsers[:xml] = -> (raw_post) {
   data = {:_xml => data} unless data.is_a?(Hash)
 
   # Transform camelCase param keys to snake_case:
-  data.transform_keys!(&:underscore)
+  data.deep_transform_keys!(&:underscore)
 }

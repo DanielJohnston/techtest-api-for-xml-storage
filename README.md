@@ -26,12 +26,12 @@ The software was written on Windows Subsystem for Linux running Ubuntu 16.04, bu
 
 To set up the application, first clone it to the target environment using `git clone`. Then install Ruby and Bundler if necessary, and use `bundle install` to install the rest of the required software. Use `rake db:create` to set up the SQLite database, then `rake db:migrate` to initialise the tables. Running `rspec` should run the tests and confirm that the application is working. `rails s` runs a Rails server for ongoing access.
 
-To usefully run this, you'll need to set it up on a live hosting platform, with a database set up and migrated to the current structure, and environment variables including the API authentication information.
+To usefully run this, you'll need to set it up on a live hosting platform, with a database set up and migrated to the current structure, environment variables including the API authentication information, and user logins.
 
-The routes to access the API are:
+The route to access the API is:
 
 * POST single property to /api/v1/properties with XML top level <property>
-* POST multiple properties to /api/v1/batch_properties with XML top level <properties>
+* or POST multiple properties to /api/v1/properties with XML top level <properties> and a <property> tag for each property record
 
 ## Development notes
 
@@ -42,9 +42,13 @@ Some notes have been split out to a [separate file concerning the software devel
 - [x] Write initial integration and unit tests for Property to drive development
 - [x] Add XML handling and POST route
 - [x] Convert incoming camelCase field names to snake_case
-- [ ] Resolve incorrect routing on a response
-- [ ] Add model code and migration to post all fields for a single property
-- [ ] Write tests for posting of multiple properties in a single request
-- [ ] Add controller code to post multiple properties in a single request
+- [x] Resolve incorrect routing on a response
+- [x] Fix non-working snake_case conversion
+- [x] Write tests for posting of multiple properties in a single request
+- [x] Add controller code to post multiple properties in a single request
 - [ ] Scaffold the User class and related functionality
 - [ ] Write tests for User to drive development
+- [ ] Add remaining fields to the Property model, including arrays
+- [ ] Test that the saved data matches to the input data
+- [ ] Remove unused verbs and tests
+- [ ] Refactor multiple property posting to model to separate concerns
