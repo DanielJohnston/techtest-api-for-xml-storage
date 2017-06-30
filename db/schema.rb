@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170627091259) do
+ActiveRecord::Schema.define(version: 20170630053728) do
 
   create_table "properties", force: :cascade do |t|
     t.integer "property_id"
@@ -21,6 +21,52 @@ ActiveRecord::Schema.define(version: 20170627091259) do
     t.integer "reference_number"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "address_name"
+    t.text "address_number"
+    t.text "address_street"
+    t.text "address2"
+    t.text "address3"
+    t.text "address4"
+    t.text "address_postcode"
+    t.text "country"
+    t.text "display_address"
+    t.integer "property_bedrooms"
+    t.integer "property_bathrooms"
+    t.integer "property_ensuites"
+    t.integer "property_reception_rooms"
+    t.integer "property_kitchens"
+    t.text "display_property_type"
+    t.integer "property_type"
+    t.integer "property_style"
+    t.integer "property_age"
+    t.decimal "floor_area", precision: 16, scale: 2
+    t.text "floor_area_units"
+    t.text "property_feature1"
+    t.text "property_feature2"
+    t.text "property_feature3"
+    t.text "property_feature4"
+    t.text "property_feature5"
+    t.text "property_feature6"
+    t.text "property_feature7"
+    t.text "property_feature8"
+    t.text "property_feature9"
+    t.text "property_feature10"
+    t.decimal "price"
+    t.decimal "for_sale_poa"
+    t.integer "price_qualifier"
+    t.integer "property_tenure"
+    t.boolean "sale_by"
+    t.boolean "development_opportunity"
+    t.boolean "investment_opportunity"
+    t.decimal "estimated_rental_income"
+    t.integer "availability"
+    t.text "main_summary"
+    t.text "full_description"
+    t.boolean "featured_property"
+    t.integer "region_id"
+    t.decimal "latitude"
+    t.decimal "longitude"
+    t.date "date_last_modified"
   end
 
 end

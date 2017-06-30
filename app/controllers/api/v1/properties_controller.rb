@@ -62,6 +62,17 @@ class Api::V1::PropertiesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def allowable_params(unfiltered_params)
-      unfiltered_params.permit(:branch_id, :client_name, :branch_name, :department, :reference_number)
+      unfiltered_params.permit(:property_id, :branch_id, :client_name, :branch_name,
+      :department, :reference_number, :address_name, :address_number, :address_street,
+      :address2, :address3, :address4, :address_postcode, :country, :display_address,
+      :property_bedrooms, :property_bathrooms, :property_ensuites, :property_reception_rooms,
+      :property_kitchens, :display_property_type, :property_type, :property_style,
+      :property_age, :floor_area, :floor_area_units, :property_feature1, :property_feature2,
+      :property_feature3, :property_feature4, :property_feature5, :property_feature6,
+      :property_feature7, :property_feature8, :property_feature9, :property_feature10,
+      :price, :for_sale_poa, :price_qualifier, :property_tenure, :sale_by,
+      :development_opportunity, :investment_opportunity, :estimated_rental_income,
+      :availability, :main_summary, :full_description, :date_last_modified,
+      :featured_property, :region_id, :latitude, :longitude)
     end
 end
