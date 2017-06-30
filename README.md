@@ -14,9 +14,9 @@ To enable Rails to work with XML input data, actionpack-xml_parser was added bac
 
 API versioning is via URL at present, i.e. `/api/v1/[resource]`, rather than header.
 
-The XML format for a POST implies creation of multiple objects in a single request. The solution approach is to first build single property creation, then handle collections. I used [this as a base for the approach](https://www.codeschool.com/discuss/t/surviving-apis-with-rails-posting-multiple-records/4776). I also followed the recommendation that either all of the submitted objects should be successfully saved, or none of them should. This allows a single status code to be returned, but could potentially be improved on by identifying which records are invalid.
+The XML format for a POST implies creation of multiple objects in a single request. I reworked an initial solution that allowed posting of individual `property` objects, into one that requires `properties` as the top node in all cases. This means that the POST verb is attached to a non-idiomatic noun.
 
-Standard Ruby naming syntax is to use snake_case. The XML fields are all in camelCase. [Building on an example](https://stackoverflow.com/questions/17240106/what-is-the-best-way-to-convert-all-controller-params-from-camelcase-to-snake-ca), I added [an initializer that transformed params from camelCase to snake_case](config/initializers/xml_param_key_transform.rb). This works for POST but not for e.g. GET, so would need to be taken into account if future development introduced further actions to the vocabulary.
+Standard Ruby naming syntax is to use snake_case. The XML fields are all in camelCase. [Building on this example](https://stackoverflow.com/questions/17240106/what-is-the-best-way-to-convert-all-controller-params-from-camelcase-to-snake-ca), I added [an initializer that transformed params from camelCase to snake_case](config/initializers/xml_param_key_transform.rb). This works for POST but not for e.g. GET, so would need to be taken into account if future development introduced further actions to the vocabulary.
 
 For authentication, the spec requested simple authentication via e.g. an API key.
 
@@ -30,8 +30,9 @@ To usefully run this, you'll need to set it up on a live hosting platform, with 
 
 The route to access the API is:
 
-* POST single property to /api/v1/properties with XML top level <property>
-* or POST multiple properties to /api/v1/properties with XML top level <properties> and a <property> tag for each property record
+* POST properties to /api/v1/properties with XML top level <properties> and a <property> tag for each property record
+
+Either all of the submitted properties in a request will be successfully saved, or none of them will. This allows a single status code to be returned, but could potentially be improved on by identifying which records are invalid.
 
 ## Development notes
 
@@ -46,9 +47,14 @@ Some notes have been split out to a [separate file concerning the software devel
 - [x] Fix non-working snake_case conversion
 - [x] Write tests for posting of multiple properties in a single request
 - [x] Add controller code to post multiple properties in a single request
+- [x] Set force SSL config in production usage
+- [x] Remove ability to accept property as top node in a post request
+- [x] Reject requests without properties -> property XML structure
 - [ ] Scaffold the User class and related functionality
 - [ ] Write tests for User to drive development
 - [ ] Add remaining fields to the Property model, including arrays
+- [ ] Decide and set required / permitted fields
 - [ ] Test that the saved data matches to the input data
 - [ ] Remove unused verbs and tests
+- [ ] Check CORS setup for production
 - [ ] Refactor multiple property posting to model to separate concerns

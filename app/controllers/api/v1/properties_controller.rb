@@ -1,6 +1,8 @@
 class Api::V1::PropertiesController < ApplicationController
   before_action :set_property, only: [:show, :update, :destroy]
 
+  rescue_from ActionController::ParameterMissing, with: :render_parameter_incorrect_response
+
   # GET /properties
   def index
     @properties = Property.all
@@ -15,17 +17,15 @@ class Api::V1::PropertiesController < ApplicationController
 
   # POST /properties
   def create
-    if params.has_key?("properties")
-      multi_params = params.permit(properties: [property: [:branch_id, :client_name, :branch_name, :department, :reference_number]])
-      # Attempt an atomic creation
-      success = Property.transaction do
-        multi_params[:properties].each_pair do |key, property|
-          Property.create!(property)
-        end
+    @property_list = Array.wrap(params.require(:properties).require(:property))
+
+    success = Property.transaction do
+      @property_list.each do |property|
+        Property.create!(allowable_params(property))
       end
-    else
-      success = Property.create(property_params)
     end
+
+    return if performed? # Don't render if a response is already rendered
 
     if success
       # Renders an array as post requires it to be responsive to #empty?
@@ -50,13 +50,18 @@ class Api::V1::PropertiesController < ApplicationController
   end
 
   private
+    # Respond to invalid XML input at filtering stage
+    def render_parameter_incorrect_response(exception)
+      render xml: exception, status: :unprocessable_entity
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_property
       @property = Property.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
-    def property_params
-      params.permit(property: [:branch_id, :client_name, :branch_name, :department, :reference_number])[:property]
+    def allowable_params(unfiltered_params)
+      unfiltered_params.permit(:branch_id, :client_name, :branch_name, :department, :reference_number)
     end
 end
