@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170701034707) do
+ActiveRecord::Schema.define(version: 20170701040500) do
 
   create_table "brochures", force: :cascade do |t|
     t.datetime "modified"
@@ -112,6 +112,15 @@ ActiveRecord::Schema.define(version: 20170701034707) do
     t.decimal "latitude"
     t.decimal "longitude"
     t.date "date_last_modified"
+  end
+
+  create_table "virtual_tours", force: :cascade do |t|
+    t.datetime "modified"
+    t.text "url"
+    t.integer "property_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["property_id"], name: "index_virtual_tours_on_property_id"
   end
 
 end
