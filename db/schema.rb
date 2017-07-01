@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170701040500) do
+ActiveRecord::Schema.define(version: 20170701042018) do
 
   create_table "brochures", force: :cascade do |t|
     t.datetime "modified"
@@ -37,6 +37,16 @@ ActiveRecord::Schema.define(version: 20170701040500) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["property_id"], name: "index_epc_graphs_on_property_id"
+  end
+
+  create_table "external_links", force: :cascade do |t|
+    t.datetime "modified"
+    t.text "url"
+    t.text "description"
+    t.integer "property_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["property_id"], name: "index_external_links_on_property_id"
   end
 
   create_table "floorplans", force: :cascade do |t|

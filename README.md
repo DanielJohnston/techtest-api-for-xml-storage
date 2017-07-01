@@ -50,7 +50,7 @@ Some notes have been split out to a [separate file concerning the software devel
 - [x] Set force SSL config in production usage
 - [x] Remove ability to accept property as top node in a post request
 - [x] Reject requests without properties -> property XML structure
-- [ ] Add remaining fields to the Property model, including arrays
+- [x] Add remaining fields to the Property model, including arrays
 - [ ] Scaffold the User class and related functionality
 - [ ] Write tests for User to drive development
 - [ ] Decide and set required / permitted fields

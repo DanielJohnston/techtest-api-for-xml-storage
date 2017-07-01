@@ -33,6 +33,8 @@ class Api::V1::PropertiesController < ApplicationController
         property[:brochures_attributes] = Array.wrap(property[:brochures_attributes][:brochure]).map{|url_text|{url: url_text}}
         property[:virtual_tours_attributes] = property.delete :virtual_tours
         property[:virtual_tours_attributes] = Array.wrap(property[:virtual_tours_attributes][:virtual_tour]).map{|url_text|{url: url_text}}
+        property[:external_links_attributes] = property.delete :external_links
+        property[:external_links_attributes] = Array.wrap(property[:external_links_attributes][:external_link])
         Property.create!(allowable_params(property))
       end
     end
@@ -86,8 +88,13 @@ class Api::V1::PropertiesController < ApplicationController
       :development_opportunity, :investment_opportunity, :estimated_rental_income,
       :availability, :main_summary, :full_description, :date_last_modified,
       :featured_property, :region_id, :latitude, :longitude,
-        images_attributes: [:url, :modified], floorplans_attributes: [:url, :modified],
-        epc_graphs_attributes: [:url, :modified])
+        images_attributes: [:url, :modified],
+        floorplans_attributes: [:url, :modified],
+        epc_graphs_attributes: [:url, :modified],
+        epc_front_pages_attributes: [:url, :modified],
+        brochures_attributes: [:url, :modified],
+        virtual_tours_attributes: [:url, :modified],
+        external_links_attributes: [:url, :description, :modified])
     end
 
 end
