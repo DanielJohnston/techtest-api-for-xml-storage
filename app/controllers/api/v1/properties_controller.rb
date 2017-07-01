@@ -26,8 +26,9 @@ class Api::V1::PropertiesController < ApplicationController
         property[:floorplans_attributes] = property.delete :floorplans
         property[:floorplans_attributes] = Array.wrap(property[:floorplans_attributes][:floorplan]).map{|url_text|{url: url_text}}
         property[:epc_graphs_attributes] = property.delete :epc_graphs
-        # byebug
         property[:epc_graphs_attributes] = Array.wrap(property[:epc_graphs_attributes][:epc_graph]).map{|url_text|{url: url_text}}
+        property[:epc_front_pages_attributes] = property.delete :epc_front_pages
+        property[:epc_front_pages_attributes] = Array.wrap(property[:epc_front_pages_attributes][:epc_front_page]).map{|url_text|{url: url_text}}
         Property.create!(allowable_params(property))
       end
     end
