@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  # resources :images
   namespace :api do
     namespace :v1, defaults: { format: :xml } do
       resources :properties

@@ -18,7 +18,7 @@ The XML format for a POST implies creation of multiple objects in a single reque
 
 Standard Ruby naming syntax is to use snake_case. The XML fields are all in camelCase. [Building on this example](https://stackoverflow.com/questions/17240106/what-is-the-best-way-to-convert-all-controller-params-from-camelcase-to-snake-ca), I added [an initializer that transformed params from camelCase to snake_case](config/initializers/xml_param_key_transform.rb). This works for POST but not for e.g. GET, so would need to be taken into account if future development introduced further actions to the vocabulary.
 
-For testing, there was an issue that using front-end testing without implementing a GET method makes it difficult to be certain that information has been stored correctly. I manually tested saving of the data across all tables, but this wasn't ideal.
+For testing, there was an issue that using front-end testing without implementing a GET method makes it difficult to be certain that information has been stored correctly. I manually checked correctness of saved data, but this didn't follow TDD principles.
 
 For authentication, the spec requested simple authentication via e.g. an API key. This is yet to be implemented.
 
@@ -53,10 +53,10 @@ Some notes have been split out to a [separate file concerning the software devel
 - [x] Remove ability to accept property as top node in a post request
 - [x] Reject requests without properties -> property XML structure
 - [x] Add remaining fields to the Property model, including arrays
-- [ ] Remove unused verbs and tests
+- [x] Remove unused verbs and tests
 - [ ] Scaffold the User class and related functionality
 - [ ] Write tests for User to drive development
-- [ ] Decide and set required / permitted fields
+- [ ] Review required fields
 - [ ] Test that the saved data matches to the input data
 - [ ] Check CORS setup for production
 - [ ] Refactor multiple property posting to model to separate concerns

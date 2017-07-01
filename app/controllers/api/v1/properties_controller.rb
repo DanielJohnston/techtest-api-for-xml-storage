@@ -1,19 +1,5 @@
 class Api::V1::PropertiesController < ApplicationController
-  before_action :set_property, only: [:show, :update, :destroy]
-
   rescue_from ActionController::ParameterMissing, with: :render_parameter_incorrect_response
-
-  # GET /properties
-  def index
-    @properties = Property.all
-
-    render xml: @properties
-  end
-
-  # GET /properties/1
-  def show
-    render xml: @property
-  end
 
   # POST /properties
   def create
@@ -51,29 +37,10 @@ class Api::V1::PropertiesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /properties/1
-  def update
-    if @property.update(property_params)
-      render xml: @property
-    else
-      render xml: @property.errors, status: :unprocessable_entity
-    end
-  end
-
-  # DELETE /properties/1
-  def destroy
-    @property.destroy
-  end
-
   private
     # Respond to invalid XML input at filtering stage
     def render_parameter_incorrect_response(exception)
       render xml: exception, status: :unprocessable_entity
-    end
-
-    # Use callbacks to share common setup or constraints between actions.
-    def set_property
-      @property = Property.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
@@ -99,5 +66,4 @@ class Api::V1::PropertiesController < ApplicationController
         virtual_tours_attributes: [:url, :modified],
         external_links_attributes: [:url, :description, :modified])
     end
-
 end
