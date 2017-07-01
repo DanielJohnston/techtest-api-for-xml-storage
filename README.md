@@ -10,7 +10,7 @@ An example XML payload was provided. I've modified this slightly to preserve ano
 
 The solution is built on Rails 5.1, with an SQLite database and RSpec for testing. I considered Ruby Grape and AWS Lambda, but decided Rails offered greater extensibility than Grape, and a less restrictive hosting requirement and greater familiarity than Lambda.
 
-To enable Rails to work with XML input data, actionpack-xml_parser was added back in. Re-adding a former core functionality seemed more appropriate than building on Nokogiri. However, it does highlight that XML is not preferred.
+To enable Rails to work with XML input data, actionpack-xml_parser was required as a gem. Re-adding a former core functionality seemed more appropriate than building on Nokogiri. However, it became clear that XML is not well supported in core Rails, and this caused issues at every stage of development. An unresolved issue is that Hash#from_xml [loses XML attributes on tags that have no children](https://github.com/rails/rails/issues/588). A fix for this requires moving to either SimpleXML or Nokogiri.
 
 API versioning is via URL at present, i.e. `/api/v1/[resource]`, rather than header.
 
@@ -18,7 +18,7 @@ The XML format for a POST implies creation of multiple objects in a single reque
 
 Standard Ruby naming syntax is to use snake_case. The XML fields are all in camelCase. [Building on this example](https://stackoverflow.com/questions/17240106/what-is-the-best-way-to-convert-all-controller-params-from-camelcase-to-snake-ca), I added [an initializer that transformed params from camelCase to snake_case](config/initializers/xml_param_key_transform.rb). This works for POST but not for e.g. GET, so would need to be taken into account if future development introduced further actions to the vocabulary.
 
-For authentication, the spec requested simple authentication via e.g. an API key.
+For authentication, the spec requested simple authentication via e.g. an API key. This is yet to be implemented.
 
 ## Installation and running
 
@@ -50,11 +50,12 @@ Some notes have been split out to a [separate file concerning the software devel
 - [x] Set force SSL config in production usage
 - [x] Remove ability to accept property as top node in a post request
 - [x] Reject requests without properties -> property XML structure
+- [ ] Add remaining fields to the Property model, including arrays
 - [ ] Scaffold the User class and related functionality
 - [ ] Write tests for User to drive development
-- [ ] Add remaining fields to the Property model, including arrays
 - [ ] Decide and set required / permitted fields
 - [ ] Test that the saved data matches to the input data
 - [ ] Remove unused verbs and tests
 - [ ] Check CORS setup for production
 - [ ] Refactor multiple property posting to model to separate concerns
+- [ ] Use SimpleXML gem and monkey-patch Hash to enable attribute preservation
