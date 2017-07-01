@@ -2,10 +2,11 @@
 
 ## How long did you spend on the coding test?
 
-4h
+2 days
 
 ## What would you add to your solution if you had more time?
 
+* Authentication and a User model. This isn't technically all that difficult, but I didn't get round to it in the time taken
 * API Docs
 * More content validation, and testing of failure modes and edge cases
 * Continuous integration and deployment (Travis, Snyk, Code Climate, Heroku)

@@ -23,6 +23,8 @@ class Api::V1::PropertiesController < ApplicationController
       @property_list.each do |property|
         property[:images_attributes] = property.delete :images
         property[:images_attributes] = property[:images_attributes][:image].map{|url_text|{url: url_text}}
+        property[:floorplans_attributes] = property.delete :floorplans
+        property[:floorplans_attributes] = property[:floorplans_attributes][:floorplan].map{|url_text|{url: url_text}}
         Property.create!(allowable_params(property))
       end
     end
@@ -64,7 +66,6 @@ class Api::V1::PropertiesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def allowable_params(unfiltered_params)
-      # byebug
       unfiltered_params.permit(:property_id, :branch_id, :client_name, :branch_name,
       :department, :reference_number, :address_name, :address_number, :address_street,
       :address2, :address3, :address4, :address_postcode, :country, :display_address,
@@ -76,8 +77,8 @@ class Api::V1::PropertiesController < ApplicationController
       :price, :for_sale_poa, :price_qualifier, :property_tenure, :sale_by,
       :development_opportunity, :investment_opportunity, :estimated_rental_income,
       :availability, :main_summary, :full_description, :date_last_modified,
-      :featured_property, :region_id, :latitude, :longitude, images_attributes: [:url,
-      :modified] )
+      :featured_property, :region_id, :latitude, :longitude,
+        images_attributes: [:url, :modified], floorplans_attributes: [:url, :modified])
     end
 
 end
