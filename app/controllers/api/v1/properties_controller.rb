@@ -22,9 +22,12 @@ class Api::V1::PropertiesController < ApplicationController
     success = Property.transaction do
       @property_list.each do |property|
         property[:images_attributes] = property.delete :images
-        property[:images_attributes] = property[:images_attributes][:image].map{|url_text|{url: url_text}}
+        property[:images_attributes] = Array.wrap(property[:images_attributes][:image]).map{|url_text|{url: url_text}}
         property[:floorplans_attributes] = property.delete :floorplans
-        property[:floorplans_attributes] = property[:floorplans_attributes][:floorplan].map{|url_text|{url: url_text}}
+        property[:floorplans_attributes] = Array.wrap(property[:floorplans_attributes][:floorplan]).map{|url_text|{url: url_text}}
+        property[:epc_graphs_attributes] = property.delete :epc_graphs
+        # byebug
+        property[:epc_graphs_attributes] = Array.wrap(property[:epc_graphs_attributes][:epc_graph]).map{|url_text|{url: url_text}}
         Property.create!(allowable_params(property))
       end
     end
@@ -78,7 +81,8 @@ class Api::V1::PropertiesController < ApplicationController
       :development_opportunity, :investment_opportunity, :estimated_rental_income,
       :availability, :main_summary, :full_description, :date_last_modified,
       :featured_property, :region_id, :latitude, :longitude,
-        images_attributes: [:url, :modified], floorplans_attributes: [:url, :modified])
+        images_attributes: [:url, :modified], floorplans_attributes: [:url, :modified],
+        epc_graphs_attributes: [:url, :modified])
     end
 
 end
