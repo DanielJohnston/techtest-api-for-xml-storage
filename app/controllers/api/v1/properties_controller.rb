@@ -21,6 +21,8 @@ class Api::V1::PropertiesController < ApplicationController
 
     success = Property.transaction do
       @property_list.each do |property|
+        property[:flags_attributes] = property.delete :flags
+        property[:flags_attributes] = Array.wrap(property[:flags_attributes][:flag]).map{|title_text|{title: title_text}}
         property[:images_attributes] = property.delete :images
         property[:images_attributes] = Array.wrap(property[:images_attributes][:image]).map{|url_text|{url: url_text}}
         property[:floorplans_attributes] = property.delete :floorplans
@@ -88,6 +90,7 @@ class Api::V1::PropertiesController < ApplicationController
       :development_opportunity, :investment_opportunity, :estimated_rental_income,
       :availability, :main_summary, :full_description, :date_last_modified,
       :featured_property, :region_id, :latitude, :longitude,
+        flags_attributes: [:title],
         images_attributes: [:url, :modified],
         floorplans_attributes: [:url, :modified],
         epc_graphs_attributes: [:url, :modified],

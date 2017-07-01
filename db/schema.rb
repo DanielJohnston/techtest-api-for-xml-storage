@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170701042018) do
+ActiveRecord::Schema.define(version: 20170701053552) do
 
   create_table "brochures", force: :cascade do |t|
     t.datetime "modified"
@@ -47,6 +47,14 @@ ActiveRecord::Schema.define(version: 20170701042018) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["property_id"], name: "index_external_links_on_property_id"
+  end
+
+  create_table "flags", force: :cascade do |t|
+    t.text "title"
+    t.integer "property_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["property_id"], name: "index_flags_on_property_id"
   end
 
   create_table "floorplans", force: :cascade do |t|
