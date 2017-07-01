@@ -29,6 +29,8 @@ class Api::V1::PropertiesController < ApplicationController
         property[:epc_graphs_attributes] = Array.wrap(property[:epc_graphs_attributes][:epc_graph]).map{|url_text|{url: url_text}}
         property[:epc_front_pages_attributes] = property.delete :epc_front_pages
         property[:epc_front_pages_attributes] = Array.wrap(property[:epc_front_pages_attributes][:epc_front_page]).map{|url_text|{url: url_text}}
+        property[:brochures_attributes] = property.delete :brochures
+        property[:brochures_attributes] = Array.wrap(property[:brochures_attributes][:brochure]).map{|url_text|{url: url_text}}
         Property.create!(allowable_params(property))
       end
     end
